@@ -12,20 +12,39 @@ END_POSITION=100
 #variables
 position=0
 
-diceOutput=$((RANDOM%6+1))
-echo "Diceoutput is ::" $diceOutput
 
-diceOutput=$((RANDOM%6+1))
-choice=$((RANDOM%3))
+while [[ $position -lt $END_POSITION ]]
+do
+	diceOutput=$((RANDOM%6+1))
+	choice=$((RANDOM%3))
 	case $choice in
 		0)
 			# No Play Condition
-			position=$(($position+0)) ;;
+			if [[ $position -lt 0 ]]
+         		then
+            			position=0
+			else
+         			position=$(($position+0))
+			fi
+			;;
 		1)
 			# Snake
-			position=$(($position-$diceOutput)) ;;
+			if [[ $position -lt 0 ]]
+         		then
+            			position=0
+         		else
+            			position=$(($position-$diceOutput))
+			fi
+			;;
 		*)
 			# ladder
-			position=$(($position+$diceOutput))	;;
+			if [[ $position -lt 0 ]]
+			then
+				position=0
+			else
+				position=$(($position+$diceOutput))
+			fi
+			;;
 	esac
-echo "Position of Playar is::"$position
+done
+echo "Player position ::"$position
